@@ -1,4 +1,4 @@
-package dev.omar.registration.appuser;
+package dev.omar.registration.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +24,12 @@ import java.util.Collections;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-@Getter
-@Setter
+@Builder
 @EqualsAndHashCode
+@AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "\"User\"")
-@Table(uniqueConstraints = { @UniqueConstraint(name = "email_unique", columnNames = "email") })
+@Entity(name = "Users")
+@Table(uniqueConstraints = { @UniqueConstraint(name = "username_unique", columnNames = "username") })
 public class User implements UserDetails {
 
     @Id
@@ -40,8 +42,6 @@ public class User implements UserDetails {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String username;
     @Column(nullable = false, columnDefinition = "TEXT")
-    private String email;
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "TEXT")
@@ -49,10 +49,9 @@ public class User implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
 
-    public User(String name, String username, String email, String password, Role role, Boolean locked, Boolean enabled) {
+    public User(String name, String username, String password, Role role, Boolean locked, Boolean enabled) {
         this.name = name;
         this.username = username;
-        this.email = email;
         this.password = password;
         this.role = role;
         this.locked = locked;

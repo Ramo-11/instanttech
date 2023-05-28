@@ -1,4 +1,4 @@
-package dev.omar.registration.appuser;
+package dev.omar.registration.user;
 
 public enum Role {
     ADMIN, FREELANCER
