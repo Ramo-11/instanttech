@@ -8,15 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/register", consumes = {"application/x-www-form-urlencoded", "text/plain", "application/*"})
+@RequestMapping(path = "/api/v1/register", consumes = {"application/x-www-form-urlencoded", "text/plain", "application/*"})
 @AllArgsConstructor
 public class RegistrationController {
 
     private final RegistrationService registrationService;
 
-    // TODO: Change AuthenticationResponse to RegistrationResponse
     @PostMapping
-    public AuthenticationResponse register(RegistrationRequest request) {
+    public RegistrationResponse register(RegistrationRequest request) {
         return registrationService.register(request);
     }
 

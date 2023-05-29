@@ -17,15 +17,15 @@ public class RegistrationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthenticationResponse register(RegistrationRequest request) {
+    public RegistrationResponse register(RegistrationRequest request) {
         var user = User.builder()
-                .name(request.getName())
-                .username(request.getUsername())
-                .password(passwordEncoder.bCryptPasswordEncoder().encode(request.getPassword()))
+                .name(request.name())
+                .username(request.username())
+                .password(passwordEncoder.bCryptPasswordEncoder().encode(request.password()))
                 .role(Role.FREELANCER)
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return RegistrationResponse.builder().token(jwtToken).message("User was registered successfully").build();
     }
 }
