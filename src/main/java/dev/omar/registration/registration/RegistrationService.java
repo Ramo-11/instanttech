@@ -1,31 +1,34 @@
 package dev.omar.registration.registration;
 
-import dev.omar.registration.auth.AuthenticationResponse;
+import dev.omar.registration.models.user.UserService;
 import dev.omar.registration.security.PasswordEncoder;
 import dev.omar.registration.security.config.JwtService;
-import dev.omar.registration.user.Role;
-import dev.omar.registration.user.UserRepository;
-import dev.omar.registration.user.User;
+import dev.omar.registration.models.user.Role;
+import dev.omar.registration.models.user.User;
+import dev.omar.registration.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class RegistrationService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserService userService;
     private final JwtService jwtService;
+    private final EmailValidator emailValidator = new EmailValidator();
 
-    public RegistrationResponse register(RegistrationRequest request) {
-        var user = User.builder()
-                .name(request.name())
-                .username(request.username())
-                .password(passwordEncoder.bCryptPasswordEncoder().encode(request.password()))
-                .role(Role.FREELANCER)
-                .build();
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return RegistrationResponse.builder().token(jwtToken).message("User was registered successfully").build();
+    public ResponseEntity<RegistrationResponse> register(RegistrationRequest request) {
+        boolean isEmailValid = emailValidator.test(request.username());
+        if (!isEmailValid) {
+            throw new IllegalStateException("email: " + request.username() + " is not valid");
+        }
+
+        User userToSave = new User(request.name(), request.username(), request.password(), Role.FREELANCER);
+
+        userService.signUpUser(userToSave);
+        var jwtToken = jwtService.generateToken(userToSave);
+
+        return ResponseEntity.status(200).body(new RegistrationResponse(jwtToken, "User was registered successfully"));
     }
 }

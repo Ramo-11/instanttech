@@ -1,6 +1,6 @@
 package dev.omar.registration.security.config;
 
-import dev.omar.registration.user.UserService;
+import dev.omar.registration.models.user.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

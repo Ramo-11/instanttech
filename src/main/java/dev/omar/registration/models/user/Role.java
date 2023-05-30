@@ -1,4 +1,4 @@
-package dev.omar.registration.user;
+package dev.omar.registration.models.user;
 
 public enum Role {
     ADMIN, FREELANCER

@@ -1,6 +1,6 @@
 package dev.omar.registration.security;
 
-import dev.omar.registration.user.UserService;
+import dev.omar.registration.models.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

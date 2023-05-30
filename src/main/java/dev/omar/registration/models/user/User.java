@@ -1,4 +1,4 @@
-package dev.omar.registration.user;
+package dev.omar.registration.models.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +10,8 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +21,6 @@ import java.util.Collections;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
-@Builder
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,6 +45,15 @@ public class User implements UserDetails {
     private Boolean locked;
     private Boolean enabled;
 
+    public User(String name, String username, String password, Role role) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.locked = false;
+        this.enabled = true;
+    }
+
     public User(String name, String username, String password, Role role, Boolean locked, Boolean enabled) {
         this.name = name;
         this.username = username;
@@ -67,6 +72,10 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String encodedPassword) {
+        this.password = encodedPassword;
     }
 
     @Override
