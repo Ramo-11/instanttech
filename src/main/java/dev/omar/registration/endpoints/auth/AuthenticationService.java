@@ -1,4 +1,4 @@
-package dev.omar.registration.auth;
+package dev.omar.registration.endpoints.auth;
 
 import dev.omar.registration.models.user.UserService;
 import dev.omar.registration.security.config.JwtService;

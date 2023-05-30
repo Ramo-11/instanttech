@@ -1,7 +1,6 @@
-package dev.omar.registration.registration;
+package dev.omar.registration.endpoints.registration;
 
 import dev.omar.registration.models.user.UserService;
-import dev.omar.registration.security.PasswordEncoder;
 import dev.omar.registration.security.config.JwtService;
 import dev.omar.registration.models.user.Role;
 import dev.omar.registration.models.user.User;

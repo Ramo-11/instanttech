@@ -1,6 +1,5 @@
-package dev.omar.registration.root;
+package dev.omar.registration.endpoints.root;
 
-import dev.omar.registration.registration.RegistrationRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,7 @@ public class RootController {
     private final RootService rootService;
 
     @GetMapping
-    public ResponseEntity<RootResponse> root(RegistrationRequest request) {
-        return rootService.sayHello();
+    public ResponseEntity<RootResponse> root() {
+        return rootService.respond();
     }
 }

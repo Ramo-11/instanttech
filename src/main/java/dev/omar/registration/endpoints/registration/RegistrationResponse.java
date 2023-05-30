@@ -1,11 +1,11 @@
-package dev.omar.registration.auth;
+package dev.omar.registration.endpoints.registration;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthenticationResponse {
+public class RegistrationResponse {
     private String token;
     private String message;
 }

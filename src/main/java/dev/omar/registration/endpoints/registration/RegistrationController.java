@@ -1,4 +1,4 @@
-package dev.omar.registration.registration;
+package dev.omar.registration.endpoints.registration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
