@@ -1,5 +1,7 @@
 package dev.omar.registration.endpoints.root;
 
+import dev.omar.registration.utils.AuthUtils;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class RootController {
 
     private final RootService rootService;
+    private final AuthUtils authUtils;
 
     @GetMapping
     public ResponseEntity<RootResponse> root() {
-        return rootService.respond();
+        if (authUtils.isAuthenticated()) {
+            return rootService.respond();
+        }
+        return ResponseEntity.status(401).body(new RootResponse("You are not authorized"));
     }
 }

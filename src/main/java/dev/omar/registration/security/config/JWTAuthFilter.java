@@ -1,6 +1,8 @@
 package dev.omar.registration.security.config;
 
 import dev.omar.registration.models.user.UserService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +12,7 @@ import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -38,33 +41,48 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
-    ) throws ServletException, IOException {
-        final String authHeader = request.getHeader(AUTHORIZATION);
-        final String userEmail;
-        final String jwtToken;
+    ) throws ServletException, IOException, ExpiredJwtException {
+            final String authHeader = request.getHeader(AUTHORIZATION);
+            final String userEmail;
+            final String jwtToken;
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            // Pass the request and response to the next filter in the chain
-            filterChain.doFilter(request, response);
-            return;
-        }
-        jwtToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwtToken);
-
-        // Check that user email was retrieved successfully from the token and user is NOT authenticated
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userService.loadUserByUsername(userEmail);
-
-            if (jwtService.isTokenValid(jwtToken, userDetails)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+        try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                // Pass the request and response to the next filter in the chain
+                filterChain.doFilter(request, response);
+                return;
             }
+            jwtToken = authHeader.substring(7);
+            userEmail = jwtService.extractUsername(jwtToken);
+
+            // Check that user email was retrieved successfully from the token and user is NOT authenticated
+            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userService.loadUserByUsername(userEmail);
+
+                if (jwtService.isTokenValid(jwtToken, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+            filterChain.doFilter(request, response);
+        } catch (MalformedJwtException e) {
+            String message = "Malformed JWT Token";
+            writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED, message, e);
+        } catch (Exception e) {
+            writeResponse(response, HttpServletResponse.SC_UNAUTHORIZED, e.getMessage(), e);
         }
-        filterChain.doFilter(request, response);
+    }
+
+    private void writeResponse(HttpServletResponse response, int statusCode, String message, Exception e) throws IOException {
+        response.setContentType("application/json");
+        response.setStatus(statusCode);
+        response.getOutputStream().println("{ \"error\": \"" + message + "\" }");
+        System.out.println("Exception caught: " + e);
+        e.printStackTrace();
     }
 }
