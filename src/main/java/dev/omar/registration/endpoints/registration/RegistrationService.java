@@ -1,13 +1,12 @@
 package dev.omar.registration.endpoints.registration;
 
-import dev.omar.registration.models.user.UserService;
+import dev.omar.registration.entities.user.UserService;
 import dev.omar.registration.security.config.JwtService;
-import dev.omar.registration.models.user.Role;
-import dev.omar.registration.models.user.User;
+import dev.omar.registration.entities.user.Role;
+import dev.omar.registration.entities.user.User;
 import dev.omar.registration.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class RegistrationService {
 
         User userToSave = new User(request.name(), request.username(), request.password(), Role.FREELANCER);
 
-        Pair<Integer, String> pairResponse = userService.signUpUser(userToSave);
+        Pair<Integer, String> pairResponse = userService.createUserAccount(userToSave);
         RegistrationResponse response = new RegistrationResponse(pairResponse.getSecond());
         if (pairResponse.getFirst() == 200) {
             var jwtToken = jwtService.generateToken(userToSave);

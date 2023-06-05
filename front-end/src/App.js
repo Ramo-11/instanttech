@@ -1,64 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { useLocalState } from './util/LocalStorage';
+import { Route, Routes } from 'react-router-dom';
+import Registeration from './views/Registeration';
+import Home from './views/Home';
+import Login from './views/Login';
+import PrivateRoute from './views/PrivateRoute';
 
 function App() {
 
-  let headers = {
-    "Content-Type": "application/json"
-  }
+  // Default value of jwt is empty string
+  // const [jwt, setJwt] = useLocalState("", "jwt")
 
-  let body = {
-    name: "Omar",
-    username: "omarh5877@gmail.com",
-    password: "aaaa"
-  }
+  // useEffect(() => {
+  //   if (!jwt) {
+  //     let headers = {
+  //       "Content-Type": "application/json"
+  //     }
+    
+  //     let body = {
+  //       name: "Omar",
+  //       username: "user2@gmail.com",
+  //       password: "aaaa"
+  //     }
+    
+  //     let fetchContent = {
+  //       headers: headers,
+  //       method: "post",
+  //       body: JSON.stringify(body) 
+  //     }
+    
+  //     async function register() {
+  //       let result = await fetch('http://localhost:8080/api/v1/auth', fetchContent)
+  //       let responseResult = await result;
+  //       const body = await result.json()
+    
+  //       if (responseResult.status === 200) {
+  //         console.log('Success')
+  //         setJwt(body['token'])
+  //       } else {
+  //         console.log(`Not Success: ${responseResult.status}`)
+  //         console.log(body)
+  //       }
+  //     }
+    
+  //     register()
+  //   }
 
-  let fetchContent = {
-    headers: headers,
-    method: "post",
-    body: JSON.stringify(body) 
-  }
-
-  console.log(fetchContent)
- 
-  fetch('http://localhost:8080/api/v1/register', fetchContent)
-  .then(response => {
-    if (response.ok) {
-      // Successful response (status code 2xx)
-      return response.json().then(data => {
-        // Handle the response data
-        console.log('Response:', data);
-      });
-    } else {
-      // Error response (status code is not 2xx)
-      return response.json().then(errorData => {
-        // Handle the error response
-        console.error('Error:', errorData);
-      });
-    }
-  })
-  .catch(error => {
-    // Handle network or other errors
-    console.error('Request failed:', error);
-  })
+  // }, [])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p> 
-          Edit <code>src/App.js</code> and save to reloakd.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/" element={ 
+        <PrivateRoute>
+          <Home/> 
+        </PrivateRoute>
+      } />
+      <Route path="register" element={ <Registeration/> } />
+      <Route path="login" element={ <Login/> } />
+    </Routes>
   );
 }
 

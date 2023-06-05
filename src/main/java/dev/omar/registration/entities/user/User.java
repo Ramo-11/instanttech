@@ -1,4 +1,4 @@
-package dev.omar.registration.models.user;
+package dev.omar.registration.entities.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

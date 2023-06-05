@@ -1,4 +1,4 @@
-package dev.omar.registration.endpoints.auth;
+package dev.omar.registration.endpoints.login;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = {"/api/v1/auth", "/api/v1/login"})
+@RequestMapping(path = "/api/v1/loginn")
 @RequiredArgsConstructor
-public class AuthenticationController {
+public class LoginController {
 
-    private final AuthenticationService authenticationService;
+    private final LoginService loginService;
 
     @PostMapping
     @CrossOrigin(origins = "http://localhost:3000")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
-        return authenticationService.authenticate(request);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        return loginService.login(request);
     }
 
 }

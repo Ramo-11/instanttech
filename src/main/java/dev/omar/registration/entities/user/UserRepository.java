@@ -1,4 +1,4 @@
-package dev.omar.registration.models.user;
+package dev.omar.registration.entities.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,10 +1,8 @@
-package dev.omar.registration.models.user;
+package dev.omar.registration.entities.user;
 
-import dev.omar.registration.endpoints.registration.RegistrationResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.util.Pair;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,14 +19,11 @@ public class UserService implements UserDetailsService {
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByUsername(username);
-        if (user.isEmpty()) {
-            throw new IllegalStateException("User with email: " + username + " does not exist");
-        }
-        return user.get();
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        return userOpt.orElseThrow(() -> new UsernameNotFoundException("User with the email: " + username + " does not exist"));
     }
 
-    public Pair<Integer, String> signUpUser(User user) {
+    public Pair<Integer, String> createUserAccount(User user) {
         boolean userExists = userRepository.findByUsername(user.getUsername()).isPresent();
         if (userExists) {
             return Pair.of(401, "User with the email: " + user.getUsername() + " already exists");
