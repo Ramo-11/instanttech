@@ -37,6 +37,14 @@ public class Job {
     @ManyToOne
     private User assignedTo;
 
+    public Job(String title, String description, String rate, Date date, User createdBy) {
+        this.title = title;
+        this.description = description;
+        this.rate = rate;
+        this.date = date;
+        this.createdBy = createdBy;
+    }
+
     public Long getId() {
         return id;
     }

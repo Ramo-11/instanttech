@@ -17,6 +17,6 @@ spring:
         dialect:
         format_sql: true
     show_sql: true
-logging:
-  level:
-    root: DEBUG
+#logging:
+#  level:
+#    root: DEBUG

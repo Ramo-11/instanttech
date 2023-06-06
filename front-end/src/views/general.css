@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Sans-Serif;
+    font-weight: normal;
+}
+
+button {
+  padding: 9px;
+  background-color: #4157a0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  color: white;
+}
+
+button:hover {
+  background-color: #99a6d2;
+}

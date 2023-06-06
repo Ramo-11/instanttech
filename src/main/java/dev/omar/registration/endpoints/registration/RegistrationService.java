@@ -7,6 +7,7 @@ import dev.omar.registration.entities.user.User;
 import dev.omar.registration.utils.EmailValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.util.Pair;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,16 @@ public class RegistrationService {
     public ResponseEntity<RegistrationResponse> register(RegistrationRequest request) {
         boolean isEmailValid = emailValidator.test(request.username());
         if (!isEmailValid) {
-            return ResponseEntity.status(401).body(new RegistrationResponse("Email '" + request.username() + "' is invalid"));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new RegistrationResponse("Email '" + request.username() + "' is invalid"));
         }
 
-        User userToSave = new User(request.name(), request.username(), request.password(), Role.FREELANCER);
+        Role role;
+        if (request.role().equalsIgnoreCase(Role.FREELANCER.name())) {
+            role = Role.FREELANCER;
+        } else {
+            role = Role.CLIENT;
+        }
+        User userToSave = new User(request.name(), request.username(), request.password(), role);
 
         Pair<Integer, String> pairResponse = userService.createUserAccount(userToSave);
         RegistrationResponse response = new RegistrationResponse(pairResponse.getSecond());

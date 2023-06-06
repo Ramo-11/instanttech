@@ -1,4 +1,4 @@
-.loginForm {
+.jobForm {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -10,13 +10,17 @@
     box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
 }
 
-.loginForm h1 {
+button:hover {
+    background-color: #99a6d2;
+}
+
+.jobForm h1 {
     font-family: "Montserrat", sans-serif;
     color: #210124;
     font-size: 30px;
 }
 
-.loginForm input {
+.jobForm input {
     width: 15rem;
     padding: 10px 15px;
     outline: none;
@@ -26,13 +30,13 @@
     background-color: rgb(236, 236, 236);
 }
 
-.loginForm input:focus {
+.jobForm input:focus {
     outline: none;
     border-color: #4157a0;
     box-shadow: 0 0 5px #4157a0;
 }
 
-.submitLoginFormButton {
+.createJobButton {
     width: 50%;
     padding: 9px;
     background-color: #4157a0;

@@ -1,4 +1,4 @@
-package dev.omar.registration.endpoints.login;
+package dev.omar.registration.endpoints.jobs;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class LoginResponse {
+public class JobResponse {
     private String message;
 }

@@ -1,41 +1,56 @@
-/* Reset default styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Form container */
-  div {
+.signupForm {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-  }
-  
-  /* Form labels */
-  label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  /* Form input fields */
-  input {
-    padding: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 250px;
-  }
-  
-  /* Form input field placeholders */
-  input::placeholder {
-    color: #999;
-  }
-  
-  /* Form input field focus */
-  input:focus {
+    gap: 40px;
+    margin: 20px 30% 50px 30%;
+    padding: 50px;
+    background: #fff;
+    box-shadow: 2px 5px 20px rgba(119, 119, 119, 0.5);
+}
+
+.accountType {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.accountTypeButtons button {
+    border-radius: 0;
+    margin-right: 2px;
+    width: 6rem;
+    background-color: #99a6d2;
+}
+
+.accountTypeButtons button:hover {
+    background-color: #4157a0;
+}
+
+.signupForm h1 {
+    font-family: "Montserrat", sans-serif;
+    color: #210124;
+    font-size: 30px;
+}
+
+.signupForm input {
+    width: 15rem;
+    padding: 10px 15px;
     outline: none;
-    border-color: #66afe9;
-    box-shadow: 0 0 5px #66afe9;
-  }
-  
+    border: none;
+    border-radius: 10px;
+    font-family: "Montserrat", sans-serif;
+    background-color: rgb(236, 236, 236);
+}
+
+.signupForm input:focus {
+    outline: none;
+    border-color: #4157a0;
+    box-shadow: 0 0 5px #4157a0;
+}
+
+.submitSignupFormButton {
+    width: 50%;
+}
