@@ -45,6 +45,10 @@ public class Job {
         this.createdBy = createdBy;
     }
 
+    public Job() {
+
+    }
+
     public Long getId() {
         return id;
     }

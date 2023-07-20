@@ -5,6 +5,7 @@ server:
 
 spring:
   datasource:
+    #    url: jdbc:postgresql://bgsqvhsu:ETZgjLimG7NX3TtIuiA7I9vOTss7gQwx@stampy.db.elephantsql.com:5432/bgsqvhsu
     url: jdbc:postgresql://localhost:5432/registration
     username:
     password:
@@ -17,6 +18,3 @@ spring:
         dialect:
         format_sql: true
     show_sql: true
-#logging:
-#  level:
-#    root: DEBUG
