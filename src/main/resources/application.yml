@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     #    url: jdbc:postgresql://bgsqvhsu:ETZgjLimG7NX3TtIuiA7I9vOTss7gQwx@stampy.db.elephantsql.com:5432/bgsqvhsu
-    url: jdbc:postgresql://localhost:5432/registration
+    url: jdbc:postgresql://162.197.205.121:5432/registration
     username:
     password:
     driver-class-name: org.postgresql.Driver
